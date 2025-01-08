@@ -1,0 +1,3 @@
+fastapi/__pycache__/
+nginx/conf.d/error.log
+nginx/conf.d/access.log
