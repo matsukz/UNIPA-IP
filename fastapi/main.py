@@ -29,7 +29,7 @@ async def shutdown():
   pass
 
 @app.get("/upip/api/", tags=["APIエンドポイント"], summary="テスト用")
-async def get_classroom():
+async def get_testser():
   
   result:dict ; result = {"status":"OK"}
 
@@ -42,4 +42,4 @@ async def get_classroom(request: Request,
 ):
     # IPアドレスの取得
     client_ip = x_real_ip or (x_forwarded_for.split(",")[0] if x_forwarded_for else request.client.host)
-    return {"client_ip": client_ip}
+    return {"client_ip": client_ip,"classroom":"classroom"}
