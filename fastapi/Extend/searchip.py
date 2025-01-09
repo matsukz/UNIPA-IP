@@ -9,10 +9,10 @@ def ip_to_classroom(client_ip:str, subnet:int) -> dict:
     message:str = ""
     #GetNetworkAddress
     network_cidr = ipaddress.ip_network(f"{client_ip}/{subnet}", strict=False)
-    print(str(network_cidr.network_address))
+    network_address = str(network_cidr.network_address)
 
-    if str(network_cidr.network_address) in classlist:
-        classroom = classlist[str(network_cidr.network_address)]
+    if network_address in classlist:
+        classroom = classlist[network_address]
         message = ""
     else:
         if ipaddress.ip_address(client_ip).is_private:
