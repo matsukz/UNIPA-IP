@@ -1,3 +1,4 @@
-fastapi/__pycache__/
+*.pyc
 nginx/conf.d/error.log
 nginx/conf.d/access.log
+fastapi/Extend/ClassroomList.json
