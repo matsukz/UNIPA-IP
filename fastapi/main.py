@@ -2,6 +2,8 @@ from fastapi import FastAPI, Depends,  HTTPException, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from Extend.searchip import ip_to_classroom
+
 description = """
   学内LANのローカルアドレスから現在地を特定する
   """
@@ -40,6 +42,9 @@ async def get_classroom(request: Request,
     x_forwarded_for: str = Header(None, alias="X-Forwarded-For"),
     x_real_ip: str = Header(None, alias="X-Real-IP")
 ):
-    # IPアドレスの取得
+    #GetIP
     client_ip = x_real_ip or (x_forwarded_for.split(",")[0] if x_forwarded_for else request.client.host)
-    return {"client_ip": client_ip,"classroom":"classroom"}
+
+    result = ip_to_classroom(client_ip=client_ip, subnet=24)
+
+    return {"client_ip":client_ip,"classroom":result["classroom"],"message":result["message"]}

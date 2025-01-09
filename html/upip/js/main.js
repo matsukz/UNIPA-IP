@@ -15,6 +15,7 @@ $(document).ready(function(){
     }).done(function(response){
         change_status("ip",response.client_ip);
         change_status("classroom",response.classroom);
+        change_status("message",response.message)
     }).fail(function(response_status){
     })
 
