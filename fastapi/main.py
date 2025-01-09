@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends,  HTTPException, Header
+from fastapi import FastAPI, Depends,  HTTPException, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -29,15 +29,17 @@ async def shutdown():
   pass
 
 @app.get("/upip/api/", tags=["APIエンドポイント"], summary="テスト用")
-async def get_classroom():
+async def get_testser():
   
   result:dict ; result = {"status":"OK"}
 
   return result
 
 @app.get("/upip/api/classroom", tags=["APIエンドポイント"], summary="接続元アドレスから教室を推定する")
-async def get_classroom(real_ip: str = Header(None, alias='X-Real-IP')):
-  
-  result:dict ; result = {"status":"OK","ip":real_ip}
-
-  return result
+async def get_classroom(request: Request,
+    x_forwarded_for: str = Header(None, alias="X-Forwarded-For"),
+    x_real_ip: str = Header(None, alias="X-Real-IP")
+):
+    # IPアドレスの取得
+    client_ip = x_real_ip or (x_forwarded_for.split(",")[0] if x_forwarded_for else request.client.host)
+    return {"client_ip": client_ip,"classroom":"classroom"}
